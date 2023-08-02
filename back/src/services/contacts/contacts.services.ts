@@ -1,5 +1,12 @@
 import { Repository } from "typeorm";
 import Contact from "../../entities/contacts.entity";
+import {
+  TCreateUsers,
+  TCreateUsersReturn,
+  TGetUsers,
+  TUpdateUsers,
+} from "../../interfaces/users/users.interfaces";
+import { createUsersReturnSchema, getUsersSchema } from "../../schemas";
 
 const create = async (payload: TCreateUsers): Promise<TCreateUsersReturn> => {
   const usersRepository: Repository<Contact> =

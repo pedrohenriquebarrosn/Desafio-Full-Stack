@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 import User from "../../entities/users.entity";
+import { createUsersReturnSchema, getUsersSchema } from "../../schemas";
 
 const create = async (payload: TCreateUsers): Promise<TCreateUsersReturn> => {
   const usersRepository: Repository<User> = AppDataSource.getRepository(User);
