@@ -1,9 +1,19 @@
 import { Repository } from "typeorm";
-import User from "../../entities/users.entity";
+
+import {
+  TCreateUsers,
+  TCreateUsersReturn,
+  TGetUsers,
+  TUpdateUsers,
+} from "../../interfaces/users/users.interfaces";
 import { createUsersReturnSchema, getUsersSchema } from "../../schemas";
+import { AppDataSource } from "../../data-source";
+import { Contact } from "../../entities";
+import { AppError } from "../../errors";
 
 const create = async (payload: TCreateUsers): Promise<TCreateUsersReturn> => {
-  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
+  const usersRepository: Repository<Contact> =
+    AppDataSource.getRepository(Contact);
 
   const user = usersRepository.create(payload);
 
@@ -15,9 +25,10 @@ const create = async (payload: TCreateUsers): Promise<TCreateUsersReturn> => {
 };
 
 const read = async (): Promise<TGetUsers> => {
-  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
+  const usersRepository: Repository<Contact> =
+    AppDataSource.getRepository(Contact);
 
-  const findUsers: Array<User> = await usersRepository.find();
+  const findUsers: Array<Contact> = await usersRepository.find();
 
   const users = getUsersSchema.parse(findUsers);
 
@@ -28,9 +39,10 @@ const update = async (
   payload: TUpdateUsers,
   userId: number
 ): Promise<TCreateUsersReturn> => {
-  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
+  const usersRepository: Repository<Contact> =
+    AppDataSource.getRepository(Contact);
 
-  const findUser: User | null = await usersRepository.findOneBy({
+  const findUser: Contact | null = await usersRepository.findOneBy({
     id: userId,
   });
 
@@ -51,7 +63,8 @@ const update = async (
 };
 
 const destroy = async (userId: number): Promise<void> => {
-  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
+  const usersRepository: Repository<Contact> =
+    AppDataSource.getRepository(Contact);
 
   const user = await usersRepository.findOneBy({
     id: userId,

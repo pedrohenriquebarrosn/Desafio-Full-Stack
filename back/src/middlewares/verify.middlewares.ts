@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
-import User from "../entities/users.entity";
-import { AppError } from "../errors/AppError";
-import Contact from "../entities/contacts.entity";
+import { User, Contact } from "../entities";
+import { AppError } from "../errors";
 
 const userEmail = async (
   req: Request,
@@ -49,3 +48,5 @@ const contactsEmail = async (
 
   next();
 };
+
+export default { userEmail, contactsEmail };

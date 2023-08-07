@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 import { ZodTypeAny } from "zod";
-import { AppError } from "../errors/AppError";
+import { AppError } from "../errors";
 
 const body =
   (schema: ZodTypeAny) =>

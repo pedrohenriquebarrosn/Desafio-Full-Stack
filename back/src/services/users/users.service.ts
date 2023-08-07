@@ -1,16 +1,17 @@
 import { Repository } from "typeorm";
-import Contact from "../../entities/contacts.entity";
+import { createUsersReturnSchema, getUsersSchema } from "../../schemas";
+import { AppDataSource } from "../../data-source";
+import { AppError } from "../../errors";
 import {
   TCreateUsers,
   TCreateUsersReturn,
   TGetUsers,
   TUpdateUsers,
-} from "../../interfaces/users/users.interfaces";
-import { createUsersReturnSchema, getUsersSchema } from "../../schemas";
+} from "../../interfaces";
+import { User } from "../../entities";
 
 const create = async (payload: TCreateUsers): Promise<TCreateUsersReturn> => {
-  const usersRepository: Repository<Contact> =
-    AppDataSource.getRepository(Contact);
+  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
 
   const user = usersRepository.create(payload);
 
@@ -22,10 +23,9 @@ const create = async (payload: TCreateUsers): Promise<TCreateUsersReturn> => {
 };
 
 const read = async (): Promise<TGetUsers> => {
-  const usersRepository: Repository<Contact> =
-    AppDataSource.getRepository(Contact);
+  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
 
-  const findUsers: Array<Contact> = await usersRepository.find();
+  const findUsers: Array<User> = await usersRepository.find();
 
   const users = getUsersSchema.parse(findUsers);
 
@@ -36,10 +36,9 @@ const update = async (
   payload: TUpdateUsers,
   userId: number
 ): Promise<TCreateUsersReturn> => {
-  const usersRepository: Repository<Contact> =
-    AppDataSource.getRepository(Contact);
+  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
 
-  const findUser: Contact | null = await usersRepository.findOneBy({
+  const findUser: User | null = await usersRepository.findOneBy({
     id: userId,
   });
 
@@ -60,8 +59,7 @@ const update = async (
 };
 
 const destroy = async (userId: number): Promise<void> => {
-  const usersRepository: Repository<Contact> =
-    AppDataSource.getRepository(Contact);
+  const usersRepository: Repository<User> = AppDataSource.getRepository(User);
 
   const user = await usersRepository.findOneBy({
     id: userId,

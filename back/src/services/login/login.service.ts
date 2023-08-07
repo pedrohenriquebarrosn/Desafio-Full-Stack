@@ -1,5 +1,10 @@
+import { compare } from "bcryptjs";
 import { Repository } from "typeorm";
-import User from "../../entities/users.entity";
+import { AppDataSource } from "../../data-source";
+import { User } from "../../entities";
+import { AppError } from "../../errors";
+import { TLogin } from "../../interfaces";
+import jwt from "jsonwebtoken";
 
 const createToken = async (payload: TLogin): Promise<string> => {
   const usersRepository: Repository<User> = AppDataSource.getRepository(User);
@@ -20,7 +25,7 @@ const createToken = async (payload: TLogin): Promise<string> => {
 
   const token: string = jwt.sign(
     {
-      admin: user.admin,
+      id: user.id,
     },
     process.env.SECRET_KEY!,
     {

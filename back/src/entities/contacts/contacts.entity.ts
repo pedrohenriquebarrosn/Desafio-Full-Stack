@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   ManyToOne,
 } from "typeorm";
-import User from "./users.entity";
+import { User } from "..";
 
 @Entity("contacts")
 class Contact {
@@ -23,6 +23,9 @@ class Contact {
 
   @CreateDateColumn({ type: "date" })
   createdAt: string | Date;
+
+  @Column({ type: "integer" })
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.contacts, { onDelete: "CASCADE" })
   user: User;

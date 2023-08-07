@@ -9,9 +9,9 @@ import {
 
 import {
   contactSchema,
-  contactSchemaRequest,
-  contactSchemaResponse,
-  contactSchemaUpdate,
+  createContactSchema,
+  createContactReturnSchema,
+  updateContactSchema,
 } from "./contacts/contacts.schema";
 
 export {
@@ -22,7 +22,7 @@ export {
   updateUsersSchema,
   usersLoginSchema,
   contactSchema,
-  contactSchemaRequest,
-  contactSchemaResponse,
-  contactSchemaUpdate,
+  createContactSchema,
+  createContactReturnSchema,
+  updateContactSchema,
 };

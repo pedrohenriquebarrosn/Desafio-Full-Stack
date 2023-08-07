@@ -1,32 +1,33 @@
 import { Router } from "express";
+import { contactsCotrollers } from "../../controllers";
 import { validateMiddlewares, verifyMiddlewares } from "../../middlewares";
 import { createUsersSchema, updateUsersSchema } from "../../schemas";
-import { usersControllers } from "../../controllers";
+import usersRoutes from "../users/users.routes";
 
-const usersRoutes: Router = Router();
+const contactsRoutes: Router = Router();
 
-usersRoutes.post(
+contactsRoutes.post(
   "",
   validateMiddlewares.body(createUsersSchema),
   verifyMiddlewares.userEmail,
-  usersControllers.create
+  contactsCotrollers.create
 );
 
-usersRoutes.get("", validateMiddlewares.token, usersControllers.read);
+contactsRoutes.get("", validateMiddlewares.token, contactsCotrollers.read);
 
-usersRoutes.patch(
+contactsRoutes.patch(
   "/:id",
   verifyMiddlewares.userEmail,
   validateMiddlewares.token,
   validateMiddlewares.body(updateUsersSchema),
-  usersControllers.update
+  contactsCotrollers.update
 );
 
-usersRoutes.delete(
+contactsRoutes.delete(
   "/:id",
   verifyMiddlewares.userEmail,
   validateMiddlewares.token,
-  usersControllers.destroy
+  contactsCotrollers.destroy
 );
 
-export default usersRoutes;
+export default contactsRoutes;

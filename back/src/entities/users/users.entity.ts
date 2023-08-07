@@ -3,10 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  ManyToOne,
   OneToMany,
+  BeforeInsert,
+  BeforeUpdate,
 } from "typeorm";
-import Contact from "./contacts.entity";
+import { getRounds, hashSync } from "bcryptjs";
+import { Contact } from "..";
 
 @Entity("users")
 class User {
@@ -19,11 +21,23 @@ class User {
   @Column({ type: "varchar", length: 60, unique: true })
   email: string;
 
+  @Column({ type: "varchar", length: 120 })
+  password: string;
+
   @Column({ type: "varchar", length: 11, unique: true })
   telefone: string;
 
   @CreateDateColumn({ type: "date" })
   createdAt: string | Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPassword() {
+    const isHashed = getRounds(this.password);
+    if (!isHashed) {
+      this.password = hashSync(this.password, 10);
+    }
+  }
 
   @OneToMany(() => Contact, (contact) => contact.user)
   contacts: Contact[];
