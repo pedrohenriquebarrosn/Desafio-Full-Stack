@@ -1,5 +1,10 @@
-import { Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { Login } from "../pages/Login";
 
 export const AppRoutes = () => {
-  <Routes></Routes>;
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+    </Routes>
+  );
 };
